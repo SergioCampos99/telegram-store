@@ -14,7 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $data['telegramstore'] = Product:orderBy('id', 'asc')->paginate(10);
+
+        return view ('Products', $data);
     }
 
     /**
