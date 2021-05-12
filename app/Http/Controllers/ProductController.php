@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Storage; 
+
 class ProductController extends Controller
 {
     /**
@@ -14,9 +16,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data['telegramstore'] = Product:orderBy('id', 'asc')->paginate(10);
+        $datos['Products']=Product::paginate(10);
 
-        return view ('Products', $data);
+        return view ('Products.index', $datos);
     }
 
     /**
@@ -26,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view ('Products.create');
     }
 
     /**
@@ -37,7 +39,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$productdata = request()->all();
+        $productdata = request()->except('_token');
+        
+        if($request->hasFile('Picture')){
+            $productdata['Picture']=$request->file('Picture')->store('uploads','public');
+        }
+
+
+        Product::insert($productdata);
+        //return response()->json($productdata);
+        return redirect('Product')->with('mensaje','¡Producto agregado con exito!');
     }
 
     /**
@@ -57,9 +69,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $product=Product::findOrFail($id);
+        return view('Products.edit', compact('product'));
     }
 
     /**
@@ -69,9 +82,24 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $productdata = request()->except(['_token','_method']);
+
+        if($request->hasFile('Picture')){
+            $product=Product::findOrFail($id);
+
+            Storage::delete('public/'.$product->Picture);
+
+            $productdata['Picture']=$request->file('Picture')->store('uploads','public');
+        }
+
+
+        Product::where('id','=',$id)->update($productdata);
+
+        $product=Product::findOrFail($id);
+        return view('Products.edit', compact('product'));
+        
     }
 
     /**
@@ -80,8 +108,13 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product=Product::findOrFail($id);
+
+        if(Storage::delete('public/'.$product->Picture)){
+            Product::destroy($id);
+        }
+        return redirect ('Products');
     }
 }
