@@ -49,7 +49,7 @@ class ProductController extends Controller
 
         Product::insert($productdata);
         //return response()->json($productdata);
-        return redirect('Product')->with('mensaje','¡Producto agregado con exito!');
+        return redirect('Products')->with('mensaje','¡Producto agregado con exito!');
     }
 
     /**
@@ -72,7 +72,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product=Product::findOrFail($id);
+        
         return view('Products.edit', compact('product'));
+        
     }
 
     /**
@@ -98,7 +100,8 @@ class ProductController extends Controller
         Product::where('id','=',$id)->update($productdata);
 
         $product=Product::findOrFail($id);
-        return view('Products.edit', compact('product'));
+        return redirect('Products')->with('mensaje', 'Producto editado con exito.');
+        
         
     }
 
@@ -115,6 +118,8 @@ class ProductController extends Controller
         if(Storage::delete('public/'.$product->Picture)){
             Product::destroy($id);
         }
-        return redirect ('Products');
+        //return redirect ('Products');
+
+        return redirect('Products')->with('mensaje', 'Producto eliminado de su catalogo.');
     }
 }
