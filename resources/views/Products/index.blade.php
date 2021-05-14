@@ -50,5 +50,8 @@
     </tbody>
 
 </table>
+
+{!! $Products->links() !!}
+
 </div>
 @endsection
