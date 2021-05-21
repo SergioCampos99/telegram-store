@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -16,10 +17,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $datos['Products']=Product::paginate(2);
-
-        return view ('Products.index', $datos);
+        // $datos['Products']=Product::paginate(2);
+        $product = DB::select('select * from products where userid =' . Auth::user()->id);
+        return view ('Products.index', ['Products'=>$product]);
     }
+
+    public function welcome()
+    {
+     
+
+        return view ('welcome');
+    }
+
 
     /**
      * Show the form for creating a new resource.

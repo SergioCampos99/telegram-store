@@ -7,37 +7,31 @@
 {{ Session::get('mensaje')}}
 @endif
 
-<a href="{{ url('Products/create') }}" class="btn btn-success"> Añada un nuevo producto a su catalogo </a>
+<a href="{{ url('bots/create') }}" class="btn btn-success"> Añada un nuevo Bot a su lista </a>
 <br/>
 <br/>
 <table class ="table table-light">
     <thead>
         <th>#</th>
         <th>ID</th>
-        <th>Picture</th>
         <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
+        <th>Token</th>
     </thead>
 
     <tbody>
-    @foreach($Products as $product)
+    @foreach($bots as $bot)
         <tr>
             <td>#</td>
-            <td>{{$product->id}}</td>
+            <td>{{$bot->id}}</td>
+            <td>{{$bot->name}}</td>
+            <td>{{$bot->token}}</td>
             <td>
-            <img src="{{asset('storage').'/'.$product->Picture}}" width="100" alt="">
-            </td>
-            <td>{{$product->name}}</td>
-            <td>{{$product->description}}</td>
-            <td>{{$product->Price}}</td>
-            <td>
-                <a href="{{ url('/Products/'.$product->id.'/edit') }}" class="btn btn-warning">
+                <a href="{{ url('/bots/'.$bot->id.'/edit') }}" class="btn btn-warning">
                         Editar
                 </a>
                 
                 
-                <form action="{{url('/Products/'.$product->id) }}" method="post" class="d-inline">
+                <form action="{{url('/bots/'.$bot->id) }}" method="post" class="d-inline">
                     @csrf
                     {{ method_field('DELETE')}}
 
@@ -50,6 +44,8 @@
     </tbody>
 
 </table>
+
+{!! $bots->links() !!}
 
 </div>
 @endsection

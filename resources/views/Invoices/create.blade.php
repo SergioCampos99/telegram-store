@@ -1,7 +1,36 @@
-@extends('layouts.app')
 @section('content')
 <div class="container">
-    <form action="{{ url('/Products')}}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/Invoices')}}" method="post" enctype="multipart/form-data">
+    @csrf 
+        <div class ="form-group">
+        <label for="Name"> Producto </label>
+            <select name="products" id="1">
+                @foreach ($products as $product)
+                    <option value="{{ $product['id'] }}">{{$product['name']}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class ="form-group">
+        <label for="Name"> Bot </label>
+        <select name="products" id="1">
+                @foreach ($bots as $bot)
+                    <option value="{{ $bot['id'] }}">{{$bot['name']}}</option>
+                @endforeach
+            </select>
+        </div>
+        <label for="Post"> Add Invoice </label>
+                    <input type="submit" value="Guardar datos">
+                    <br>
+                    <a href="{{ url('Invoices/') }}"> Volver </a>
+                    <br>
+    </form>
+</div>
+@endsection
+
+<!-- @extends('layouts.app')
+@section('content')
+<div class="container">
+    <form action="{{ url('/Invoices')}}" method="post" enctype="multipart/form-data">
 @csrf
             <div class="form-group">
                 <label for="Name"> Name </label>
@@ -33,4 +62,4 @@
             </div>
     </form>
 </div>
-@endsection
+@endsection -->
