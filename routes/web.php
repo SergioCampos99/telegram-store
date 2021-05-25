@@ -46,3 +46,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('bots', BotsController::class);
 Route::resource('Invoices', InvoiceController::class);
+
+Route::post('post', [App\Http\Controllers\InvoiceController::class, 'post'])->name('Invoice.post');

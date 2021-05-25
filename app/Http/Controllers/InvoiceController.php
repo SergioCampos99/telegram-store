@@ -87,4 +87,14 @@ class InvoiceController extends Controller
     {
         //
     }
+
+    public function post()
+    {
+        $products = Product::all();
+        $bots = bots::all();
+
+        $producto = request('products');
+        $bot1 = request('bots');
+        return view ('Invoices.info', compact('products', 'bots', 'producto', 'bot1'));
+    }
 }

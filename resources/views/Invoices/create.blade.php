@@ -1,6 +1,6 @@
 @section('content')
 <div class="container">
-    <form action="{{ url('/Invoices')}}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('Invoice.post')}}" method="post" enctype="multipart/form-data">
     @csrf 
         <div class ="form-group">
         <label for="Name"> Producto </label>
@@ -12,7 +12,7 @@
         </div>
         <div class ="form-group">
         <label for="Name"> Bot </label>
-        <select name="products" id="1">
+        <select name="bots" id="2">
                 @foreach ($bots as $bot)
                     <option value="{{ $bot['id'] }}">{{$bot['name']}}</option>
                 @endforeach
