@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'dd20ba883a969d12ecb5173a8bcc8bad6a624c1e',
+    'reference' => '9bed2ed0065915608df52d50351eae9194a92bb9',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -439,6 +439,15 @@ private static $installed = array (
         0 => 'v8.40.0',
       ),
     ),
+    'irazasyed/telegram-bot-sdk' => 
+    array (
+      'pretty_version' => 'v3.4.1',
+      'version' => '3.4.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '439552ebbbbbb9051f435c6556bb1c2ba5771425',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -462,7 +471,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'dd20ba883a969d12ecb5173a8bcc8bad6a624c1e',
+      'reference' => '9bed2ed0065915608df52d50351eae9194a92bb9',
     ),
     'laravel/sail' => 
     array (
@@ -499,6 +508,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '19a9673b833cc37770439097b381d86cd125bfe8',
+    ),
+    'league/event' => 
+    array (
+      'pretty_version' => '2.2.0',
+      'version' => '2.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd2cc124cf9a3fab2bb4ff963307f60361ce4d119',
     ),
     'league/flysystem' => 
     array (

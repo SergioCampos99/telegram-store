@@ -1,10 +1,10 @@
 @section('content')
 <div class="container">
-    <form action="{{ url('/Invoices')}}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('Invoice.filtrar')}}" method="post" enctype="multipart/form-data">
     @csrf 
         <div class ="form-group">
         <label for="Name"> Producto </label>
-            <select name="products" id="1">
+            <select name="product" id="1">
                 @foreach ($products as $product)
                     <option value="{{ $product['id'] }}">{{$product['name']}}</option>
                 @endforeach
@@ -12,9 +12,9 @@
         </div>
         <div class ="form-group">
         <label for="Name"> Bot </label>
-        <select name="products" id="1">
+        <select name="bot" id="1">
                 @foreach ($bots as $bot)
-                    <option value="{{ $bot['id'] }}">{{$bot['name']}}</option>
+                    <option value="{{ $bot['id'] }}" name="bot">{{$bot['name']}}</option>
                 @endforeach
             </select>
         </div>

@@ -46,3 +46,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('bots', BotsController::class);
 Route::resource('Invoices', InvoiceController::class);
+
+//Route::post('post', [App\Http\Controllers\InvoiceController::class, 'post'])->name('Invoice.post');
+
+//Route::get('filtrar', App\Http\Controllers\InvoiceController::class, 'filtrar'])->name('Invoice.filtrar');
+Route::post('filtrar', 'App\Http\Controllers\InvoiceController@filtrar')->name('Invoice.filtrar');
+
+Route::get('SendInvoice', 'App\Http\Controllers\InvoiceController@SendInvoice')->name('Invoice.SendInvoice');
