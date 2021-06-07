@@ -9,18 +9,20 @@
 <br/>
 <table class ="table table-light">
     <thead>
-        <th>#</th>
+       
         <th>ID</th>
-        <th>User owner</th>
-        <th>Destination bot</th>
         <th>Price</th>
+        <th>User ID</th>
+        <th>ProductID</th>
     </thead>
     <tbody>
     @foreach($Invoices as $invoice)
         <tr>
-            <td>#</td>
+            
             <td>{{$invoice->id}}</td>
             <td>{{$invoice->price}}</td>
+            <td>{{$invoice->userid}}</td>
+            <td>{{$invoice->productid}}</td>
             <td>
                 <a href="{{ url('/Invoices/'.$invoice->id.'/edit') }}" class="btn btn-warning">
                         Editar

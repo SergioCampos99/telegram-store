@@ -52,4 +52,5 @@ Route::resource('Invoices', InvoiceController::class);
 //Route::get('filtrar', App\Http\Controllers\InvoiceController::class, 'filtrar'])->name('Invoice.filtrar');
 Route::post('filtrar', 'App\Http\Controllers\InvoiceController@filtrar')->name('Invoice.filtrar');
 
-Route::get('SendInvoice', 'App\Http\Controllers\InvoiceController@SendInvoice')->name('Invoice.SendInvoice');
+//Route::post('SendInvoice', 'App\Http\Controllers\InvoiceController@SendInvoice')->name('Invoice.SendInvoice');
+Route::post("SendInvoice",[InvoiceController::class, 'SendInvoice']);

@@ -208,7 +208,8 @@ class ComposerStaticInitf6cca820701338bd1c74cad73bd9d360
         ),
         'Telegram\\Bot\\' => 
         array (
-            0 => __DIR__ . '/..' . '/irazasyed/telegram-bot-sdk/src',
+            0 => __DIR__ . '/../..' . '/src',
+            1 => __DIR__ . '/..' . '/irazasyed/telegram-bot-sdk/src',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -531,6 +532,7 @@ class ComposerStaticInitf6cca820701338bd1c74cad73bd9d360
         'App\\Http\\Controllers\\BotsController' => __DIR__ . '/../..' . '/app/Http/Controllers/BotsController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\InvoiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/InvoiceController.php',
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

@@ -7,11 +7,10 @@ use App\Models\Invoice;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\bots;
+use App\Models\LabeledPrices;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
-use Formapro\TelegramBot\Bot;
-use Formapro\TelegramBot\Update;
-use Formapro\TelegramBot\SendInvoice;
 
 class InvoiceController extends Controller
 {
@@ -22,7 +21,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $datos['Invoices']=Invoice::paginate(2);
+        $datos['Invoices']=Invoice::paginate(100);
         return view ('Invoices.index', $datos);
     }
 
@@ -115,25 +114,61 @@ class InvoiceController extends Controller
     }
 
     public function SendInvoice(){
-        $requestBody = file_get_contents('php://input');
-        $data = json_decode($requestBody, true);
+        $url = "https://api.telegram.org/bot" . request('bot_token') . "/sendInvoice";
+        $chat_id = request('chat_id');
+        $title = request('producto');
+        $description = request('description');
+        $payload = request('payload');
+        $provider_token = request('provider_token');
+        $currency = request('currency');
+        $precio = request('price') * 100;
         
-        $update = Update::create($data);
-        $payload = []; // any params which you need to proccess in the transaction
-        $providerToken = 'something:like:this'; // Token have to be taken from botFather
+            $product = new LabeledPrices();
+            $product->label = 'product';
+            $product->amount = $precio;
+            
+            $tax = new LabeledPrices();
+            $tax->label = 'iva';
+            $tax->amount = $precio * 21 / 100;
+
+        $prices = array($product, $tax);
         
-        $sendInvoice = new SendInvoice(
-            $update->getMessage()->getChat()->getId(),
-            'Your title',
-            'Your description of invoice',
-            json_encode($payload), 
-            $providerToken,
-            '12314czasdq', // unique id
-            'UAH',
-            [new LabeledPrice('PriceLabel_1', 3001)] // amount; here 30.01 UAH
-        );
-        
-        $bot = new Bot('telegramToken');
-        $bot->sendInvoice($sendInvoice);   
+
+        $object = new Invoice();
+        $object->url = $url;
+        $object->chat_id = $chat_id;
+        $object->title = $title;
+        $object->description = $description;
+        $object->payload = $payload;
+        $object->provider_token = $provider_token;
+        $object->currency = $currency;
+        $object->prices = $prices;
+
+        $data = json_encode( $object );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $json = json_decode($result, true);
+
+        $productid = request('product_id');
+
+        $ok = $json['ok'];
+
+        if ($ok == true) {
+            DB::table('invoices')->insert([
+                'price' => request('price'),
+                'userid' => Auth::user()->id,
+                'productid' => $productid,
+              ]);
+        }
+
+        $Invoices = DB::select('select * from invoices');
+        return view('Invoices.index',['Invoices'=>$Invoices]);
     }
 }
